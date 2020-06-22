@@ -105,14 +105,7 @@ def bolting(k_low,k_hi,k3_confidence):
         while(points_len != 21  or  angle < k_low  or angle > k_hi ):  
             img_data = get_captcha(sessiona,headers)
             img_ko = recognition_captcha(img_data)
-     
-            ## json.dumps 序列化时对中文默认使用的ascii编码.想输出真正的中文需要指定ensure_ascii=False
-            # img_ko_json = json.dumps(img_ko , indent =2 ,ensure_ascii=False ) 
-            # img_ko_json = img_ko_json.encode('raw_unicode_escape') ## 因为python3的原因，也因为优图自身的原因，此处要特殊处理
-        
-            # with open( "json.txt" ,'wb') as fb:
-            #     fb.write( img_ko_json )  
-    
+            
             try:
                 points_len = len(img_ko['items'][0]['itemstring'])
                 angle = img_ko['angle']
@@ -120,9 +113,6 @@ def bolting(k_low,k_hi,k3_confidence):
                 points_len = 1
                 angle = -20
                 continue
-
-        # print(img_ko_json.decode('utf8')) ## stdout用的是utf8，需转码才能正常显示
-        # print('-'*50)
         
         input_text = create_point( img_ko ,k3_confidence )
         if(type(input_text) == type([])):
